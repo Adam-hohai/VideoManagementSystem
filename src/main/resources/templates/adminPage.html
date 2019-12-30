@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>adminPage</title>
+    <link th:href="@{/webjars/bootstrap/3.4.1/css/bootstrap.css}" rel="stylesheet">
+</head>
+<body>
+<nav class="navbar navbar-default" role="navigation">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="#">管理员首页</a>
+        </div>
+        <div>
+            <ul class="nav navbar-nav navbar-right">
+                <li th:text="${session.adminNo}">email</li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<div id="videos" th:each="courseInfo:${courseInfos}">
+    <div class="col-sm-6 col-md-3">
+        <div class="thumbnail">
+            <img src="img/uiz7.jpg" th:src="'/img/img'+${courseInfo.getCourseId()}+'.jpg'"
+                 alt="通用的占位符缩略图">
+            <div class="caption" th:id="${courseInfo.getCourseId()}">
+                <h3><a class="video" href="/static/video/video1.mp4" th:href="'/video/video'+${courseInfo.getCourseId()}+'.mp4'" th:text="${courseInfo.getCourseName()}">缩略图标签</a></h3>
+                <p th:text="${courseInfo.getSpecialty()}">一些示例文本。一些示例文本。</p>
+                <button type="button" class="btn btn-primary checkCourse" value="checkCourse">通过审核</button>
+                <label>待审核...</label>
+            </div>
+        </div>
+    </div>
+</div>
+<script th:src="@{/webjars/jquery/3.4.1/jquery.js}"></script>
+<script>
+    $(".checkCourse").click(function () {
+        var courseId = $(this).parent().attr("id");
+        $.ajax({
+            type:"POST",
+            data:{
+                "courseId":courseId
+            },
+            url:"/checkCourseClick",
+            success:function (result) {
+                if (result.success == true) alert("成功");
+                else alert("失败");
+            },
+            error:function () {
+                alert("失败");
+            }
+        })
+    });
+</script>
+</body>
+</html>

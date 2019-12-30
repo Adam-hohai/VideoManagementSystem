@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link th:href="@{/webjars/bootstrap/3.4.1/css/bootstrap.css}" rel="stylesheet">
+</head>
+<body>
+<div class="container mt-3">
+    <h2>上传视频文件</h2>
+    <form>
+        <div class="form-group">
+            <label for="courseName" class="col-auto">课程名:</label>
+            <label class="col-auto">
+                <input type="text" name="courseName" class="form-control" id="courseName" placeholder="请输入课程名"
+                       style="width:200px">
+            </label>
+        </div>
+        <div class="form-group">
+            <label for="courseNo" class="col-auto">课程号:</label>
+            <label class="col-auto">
+                <input type="text" name="courseNo" class="form-control" id="courseNo" placeholder="请输入课程号"
+                       style="width:200px">
+            </label>
+        </div>
+        <div class="form-group">
+            <label for="specialty" class="col-auto">专业:</label>
+            <label class="col-auto">
+                <input type="text" name="specialty" class="form-control" id="specialty" placeholder="请输入专业"
+                       style="width:200px">
+            </label>
+        </div>
+        <div class="custom-file mb-3">
+            <input type="file" class="custom-file-input" id="file" name="filename" onchange="uploadVideo(this)">
+            <label class="custom-file-label" for="file">选择文件</label>
+        </div>
+
+        <!--        <div class="mt-3">-->
+        <!--            <button type="button" id="upload" class="btn btn-primary">上传</button>-->
+        <!--        </div>-->
+    </form>
+</div>
+<script th:src="@{/webjars/jquery/3.4.1/jquery.js}"></script>
+<script>
+    function uploadVideo(video) {
+        if ($("#courseName").val() != "" && $("#courseName").val() != null && $("#courseNo").val() != "" && $("#courseNo").val() != null && $("#specialty").val() != "" && $("#specialty").val() != null) {
+            //请求更新数据库
+            $.ajax({
+                url: "/uploadInfo",
+                type: "POST",
+                data: {
+                    "courseName": $("#courseName").val(),
+                    "courseNo": $("#courseNo").val(),
+                    "specialty": $("#specialty").val()
+                },
+                dataType: "json",
+                success: function (result) {
+
+                    if (result.success == true) {
+                        alert("更新数据库成功");
+                    } else {
+                        alert("失败");
+                    }
+
+                },
+                error: function () {
+                    alert("出错");
+                }
+            });
+            //上传视频
+            var fileObj = video.files[0]; // 获取文件对象
+
+            if (fileObj != undefined) {
+                if (fileObj.name) {
+                    console.log(fileObj.name)
+                } else {
+                    alert("请选择文件");
+                }
+
+                // var size = fileObj.size;
+                var type = fileObj.type;
+
+                //校验格式
+                if (type.indexOf('mp4') == -1) {
+                    alert("请上传MP4格式")
+                    return false;
+                }
+
+
+                var form = new FormData(); // FormData 对象
+                form.append("file", fileObj);
+                // form.append("courseName",$("#courseName").val());
+                // form.append("courseNo",$("#courseNo").val());
+                // form.append("specialty",$("#specialty").val());
+                $.ajax({
+                    url: "/uploadVideo",
+                    contentType: false,//false 传输对象
+                    processData: false,
+                    type: "POST",
+                    data: form,
+                    success: function (result) {
+
+                        if (result.success == true) {
+                            alert("上传视频成功");
+                        } else if (result.success == false) {
+                            alert("文件上传失败");
+                        }
+
+                    },
+                    error: function () {
+                        alert("出错");
+                    }
+                })
+            }
+        } else alert("请先填好信息再选择上传文件");
+    }
+
+    // $("#upload").click(function () {
+    //
+    // })
+
+
+</script>
+</body>
+</html>

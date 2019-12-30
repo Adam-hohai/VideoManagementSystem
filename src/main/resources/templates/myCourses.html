@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>myCourses</title>
+    <link th:href="@{/webjars/bootstrap/3.4.1/css/bootstrap.css}" rel="stylesheet">
+</head>
+<body>
+<div id="videos" th:each="subscription:${subscriptionList}">
+    <div class="col-sm-6 col-md-3">
+        <div class="thumbnail">
+            <img src="img/uiz7.jpg" th:src="'/img/img'+${subscription.getCourseId()}+'.jpg'"
+                 alt="通用的占位符缩略图">
+            <div class="caption" th:id="${subscription.getCourseId()}">
+                <h3><a class="video" href="/video/video1.mp4" th:href="'/video/video'+${subscription.getCourseId()}+'.mp4'" th:text="${courseNames.get(subscription.getCourseId())}">缩略图标签</a></h3>
+                <p th:text="${specialties.get(subscription.getCourseId())}">一些示例文本。一些示例文本。</p>
+                <button type="button" class="btn btn-primary deleteSubscription" value="deleteSubscription">取消收藏</button>
+                <label th:text="'收藏时间'+${subscription.getSubscriptionTime()}">时间</label>
+            </div>
+        </div>
+    </div>
+</div>
+<script th:src="@{/webjars/jquery/3.4.1/jquery.js}"></script>
+<script>
+    $(".video").click(function () {
+        var courseId = $(this).parent().parent().attr("id");
+        $.ajax({
+            type:"POST",
+            data:{
+                "courseId":courseId
+            },
+            url:"/clickCourseHref"
+            // success:function (result) {
+            //
+            // }
+        })
+    });
+
+    $(".deleteSubscription").click(function () {
+        var courseId = $(this).parent().attr("id");
+        $.ajax({
+            type:"POST",
+            data:{
+                "courseId":courseId
+            },
+            url:"/deleteSubscription",
+            dataType:"json",
+            success:function (result) {
+                if(result.success == true){
+                    alert("取消成功");
+                }else alert("取消失败");
+            },
+            error:function () {
+                alert("取消失败");
+            }
+        })
+    });
+
+</script>
+</body>
+</html>

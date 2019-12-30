@@ -1,0 +1,26 @@
+server:
+  port: 8081
+
+spring:
+  datasource:
+    driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
+    url: jdbc:sqlserver://127.0.0.1:1433;DatabaseName=OnlineCourse
+    username: sa
+    password: 990919
+  servlet:
+    multipart:
+      max-file-size: -1
+      max-request-size: -1 #取消上传文件大小限制
+  devtools:
+    restart:
+      enabled: true #设置开启热部署
+    freemarker:
+      cache: false    #页面不加载缓存，修改即时生效
+
+
+logging:
+  file:
+    path: springlog
+
+
+
