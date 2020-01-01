@@ -21,9 +21,11 @@
         </div>
         <form class="navbar-form navbar-right" role="search" action="/searchCourses" method="post">
             <div class="form-group">
-                <input type="text" class="form-control" placeholder="Search" name="searchName">
+                <label>
+                    <input type="text" class="form-control" placeholder="Search" name="searchName">
+                </label>
+                <button type="submit" class="btn btn-default">搜索</button>
             </div>
-            <button type="submit" class="btn btn-default">搜索</button>
         </form>
     </div>
 </nav>
@@ -33,7 +35,7 @@
             <img src="img/uiz7.jpg" th:src="'/img/img'+${courseInfo.getCourseId()}+'.jpg'"
                  alt="通用的占位符缩略图">
             <div class="caption" th:id="${courseInfo.getCourseId()}">
-                <h3><a class="video" href="/static/video/video1.mp4" th:href="'/video/video'+${courseInfo.getCourseId()}+'.mp4'" th:text="${courseInfo.getCourseName()}">缩略图标签</a></h3>
+                <h3><a class="video" href="#" th:href="'/video/video'+${courseInfo.getCourseId()}+'.mp4'" th:text="${courseInfo.getCourseName()}">缩略图标签</a></h3>
                 <p th:text="${courseInfo.getSpecialty()}">一些示例文本。一些示例文本。</p>
                 <button type="button" class="btn btn-primary subscription" value="subscription">收藏</button>
                 <label th:text="'播放量:'+${courseInfo.getClickCount()}">播放量</label>
@@ -50,8 +52,8 @@
             data:{
                 "courseId":courseId
             },
-            url:"/clickCourseHref"
-        })
+            url:"/clickCourseHref",
+        });
     });
 
     $(".subscription").click(function () {

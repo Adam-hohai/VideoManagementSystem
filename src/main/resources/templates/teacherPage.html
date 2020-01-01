@@ -26,7 +26,7 @@
             <img src="img/uiz7.jpg" th:src="'/img/img'+${uncheckedCourse.getCourseId()}+'.jpg'"
                  alt="通用的占位符缩略图">
             <div class="caption" th:id="${uncheckedCourse.getCourseId()}">
-                <h3><a class="video" href="/video/video1.mp4" th:href="'/video/video'+${uncheckedCourse.getCourseId()}+'.mp4'" th:text="${uncheckedCourse.getCourseName()}">缩略图标签</a></h3>
+                <h3><a class="video" href="#" th:href="'/video/video'+${uncheckedCourse.getCourseId()}+'.mp4'" th:text="${uncheckedCourse.getCourseName()}">缩略图标签</a></h3>
                 <p th:text="${uncheckedCourse.getSpecialty()}">一些示例文本。一些示例文本。</p>
                 <button type="button" class="btn btn-primary deleteCourse" value="deleteCourse">删除视频</button>
                 <label style="text-align: right">审核中...</label>
@@ -40,7 +40,7 @@
             <img src="img/uiz7.jpg" th:src="'/img/img'+${checkedCourse.getCourseId()}+'.jpg'"
                  alt="通用的占位符缩略图">
             <div class="caption" th:id="${checkedCourse.getCourseId()}">
-                <h3><a class="video" href="/video/video1.mp4" th:href="'/video/video'+${checkedCourse.getCourseId()}+'.mp4'" th:text="${checkedCourse.getCourseName()}">缩略图标签</a></h3>
+                <h3><a class="video" href="#" th:href="'/video/video'+${checkedCourse.getCourseId()}+'.mp4'" th:text="${checkedCourse.getCourseName()}">缩略图标签</a></h3>
                 <p th:text="${checkedCourse.getSpecialty()}">一些示例文本。一些示例文本。</p>
                 <button type="button" class="btn btn-primary deleteCourse" value="deleteCourse">删除视频</button>
                 <label th:text="'播放量:'+${checkedCourse.getClickCount()}">播放量</label>
@@ -60,7 +60,8 @@
             },
             dataType:"json",
             success:function (result) {
-                if(result.success == true){
+                location.reload();
+                if(result.success === true){
                     alert("删除成功");
                 }else alert("删除失败");
             },

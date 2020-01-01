@@ -12,7 +12,7 @@
             <img src="img/uiz7.jpg" th:src="'/img/img'+${history.getCourseId()}+'.jpg'"
                  alt="通用的占位符缩略图">
             <div class="caption" th:id="${history.getCourseId()}">
-                <h3><a class="video" href="/video/video1.mp4" th:href="'/video/video'+${history.getCourseId()}+'.mp4'" th:text="${courseNames.get(history.getCourseId())}">缩略图标签</a></h3>
+                <h3><a class="video" href="#" th:href="'/video/video'+${history.getCourseId()}+'.mp4'" th:text="${courseNames.get(history.getCourseId())}">缩略图标签</a></h3>
                 <p th:text="${specialties.get(history.getCourseId())}">一些示例文本。一些示例文本。</p>
                 <button type="button" class="btn btn-primary deleteHistory" value="deleteHistory">删除历史</button>
                 <label th:text="'时间'+${history.getClickTime()}">时间</label>
@@ -45,7 +45,8 @@
             },
             dataType:"json",
             success:function (result) {
-                if(result.success == true) alert("删除成功");
+                location.reload();
+                if(result.success === true) alert("删除成功");
                 else alert("删除失败");
             },
             error:function () {

@@ -12,7 +12,7 @@
             <img src="img/uiz7.jpg" th:src="'/img/img'+${subscription.getCourseId()}+'.jpg'"
                  alt="通用的占位符缩略图">
             <div class="caption" th:id="${subscription.getCourseId()}">
-                <h3><a class="video" href="/video/video1.mp4" th:href="'/video/video'+${subscription.getCourseId()}+'.mp4'" th:text="${courseNames.get(subscription.getCourseId())}">缩略图标签</a></h3>
+                <h3><a class="video" href="#" th:href="'/video/video'+${subscription.getCourseId()}+'.mp4'" th:text="${courseNames.get(subscription.getCourseId())}">缩略图标签</a></h3>
                 <p th:text="${specialties.get(subscription.getCourseId())}">一些示例文本。一些示例文本。</p>
                 <button type="button" class="btn btn-primary deleteSubscription" value="deleteSubscription">取消收藏</button>
                 <label th:text="'收藏时间'+${subscription.getSubscriptionTime()}">时间</label>
@@ -46,7 +46,8 @@
             url:"/deleteSubscription",
             dataType:"json",
             success:function (result) {
-                if(result.success == true){
+                location.reload();
+                if(result.success === true){
                     alert("取消成功");
                 }else alert("取消失败");
             },
