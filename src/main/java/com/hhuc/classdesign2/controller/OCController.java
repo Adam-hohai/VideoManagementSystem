@@ -93,11 +93,23 @@ public class OCController {
                 //需要返回视频课程信息
                 List<CheckInfo> checkInfoList = ocService.getCheckByStatus(1);
                 List<CourseInfo> courseInfoList = new ArrayList<>();
+//                List<SchoolInfo> schoolInfoList = ocService.getSchool();
+//                List<TeacherInfo> teacherInfoList = ocService.getTeacher();
                 for(CheckInfo checkInfo:checkInfoList){
                     CourseInfo courseInfo = ocService.getCouById(checkInfo.getCourseId());
                     courseInfoList.add(courseInfo);
+//                    SchoolInfo schoolInfo = ocService.getSchById(courseInfo.getSchoolId());
+//                    String school = "schoolInfo" + courseInfo.getCourseId();
+//                    model.addAttribute("schoolInfo"+courseInfo.getCourseId(),schoolInfo);
+//                    schoolInfoList.add(schoolInfo);
+//                    TeacherInfo teacherInfo = ocService.getTeaById(courseInfo.getTeacherId());
+////                    String teacher = "teacherInfo" + courseInfo.getCourseId();
+////                    model.addAttribute(teacher,teacherInfo);
+//                    teacherInfoList.add(teacherInfo);
                 }
                 model.addAttribute("courseInfos",courseInfoList);
+//                model.addAttribute("schoolInfos",schoolInfoList);
+//                model.addAttribute("teacherInfos",teacherInfoList);
                 return "studentPage";
             }
             else{
@@ -107,7 +119,10 @@ public class OCController {
                 List<CourseInfo> uncheckedCourses = new ArrayList<>();
                 for (CourseInfo courseInfo:courseInfoList){
                     CheckInfo checkInfo = ocService.getCheckByCouId(courseInfo.getCourseId());
-                    if (checkInfo.getStatus() == 1) checkedCourses.add(courseInfo);
+                    if (checkInfo.getStatus() == 1) {
+                        checkedCourses.add(courseInfo);
+
+                    }
                     else uncheckedCourses.add(courseInfo);
                 }
                 model.addAttribute("checkedCourses",checkedCourses);
@@ -116,6 +131,22 @@ public class OCController {
             }
         }else return "login";
 
+    }
+
+    //专业分类(计科)
+    @RequestMapping("/specialtySortComputer")
+    public String specialtySort(HttpServletRequest request,Model model){
+        List<CourseInfo> courseInfoList = ocService.getCouBySpecialty("计算机科学与技术");
+        model.addAttribute("courseInfos",courseInfoList);
+        return "searchCourses";
+    }
+
+    //专业分类（信息管理与信息系统）
+    @RequestMapping("/specialtySortInfoManager")
+    public String specialtySortInfoManager(HttpServletRequest request,Model model){
+        List<CourseInfo> courseInfoList = ocService.getCouBySpecialty("信息管理与信息系统");
+        model.addAttribute("courseInfos",courseInfoList);
+        return "searchCourses";
     }
 
     //搜索时跳转

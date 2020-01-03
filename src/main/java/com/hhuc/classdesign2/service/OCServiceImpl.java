@@ -74,6 +74,25 @@ public class OCServiceImpl {
         return onlineCourseMapper.getMaxCouId();
     }
 
+    public List<CourseInfo> getCouBySpecialty(String specialty){
+        return onlineCourseMapper.getCouBySpecialty(specialty);
+    }
+
+    //根据id获得teacherInfo
+    public TeacherInfo getTeaById(Long teacherId){
+        return onlineCourseMapper.getTeaById(teacherId);
+    }
+
+    //获得所有学校
+    public List<SchoolInfo> getSchool(){
+        return onlineCourseMapper.getSchool();
+    }
+
+    //获得所有教师
+    public List<TeacherInfo> getTeacher(){
+        return onlineCourseMapper.getTeacher();
+    }
+
     //通过email获得StudentInfo
     public StudentInfo getStuByEmail(String email){
         Registration registration = onlineCourseMapper.getRegByEmail(email);

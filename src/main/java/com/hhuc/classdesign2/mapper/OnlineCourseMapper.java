@@ -57,6 +57,9 @@ public interface OnlineCourseMapper {
     @Select("select * from CourseInfo where schoolId=#{schoolId}")
     public List<CourseInfo> getCouBySchId(Long schoolId);
 
+    @Select("select * from CourseInfo where specialty=#{specialty}")
+    public List<CourseInfo> getCouBySpecialty(String specialty);
+
     @Select("select * from CourseInfo where courseId=#{courseId}")
     public CourseInfo getCouById(Long courseId);
 
@@ -75,6 +78,9 @@ public interface OnlineCourseMapper {
 
     @Select("select * from TeacherInfo where teacherNo=#{teacherNo}")
     public TeacherInfo getTeaByNo(String teacherNo);
+
+    @Select("select * from TeacherInfo where teacherId=#{teacherId}")
+    public TeacherInfo getTeaById(Long teacherId);
 
     @Select("select * from SubscriptionInfo where studentId=#{studentId}")
     public List<SubscriptionInfo> getSubByStuId(Long studentId);

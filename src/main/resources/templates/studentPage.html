@@ -12,10 +12,16 @@
             <a class="navbar-brand" href="#">首页</a>
         </div>
         <div>
+            <ul  class="nav navbar-nav navbar-left">
+                <li><a href="/specialtySortComputer" id="computer">计算机科学与技术</a></li>
+                <li><a href="/specialtySortInfoManager" id="infoManger">信息管理与信息系统</a></li>
+            </ul>
+        </div>
+        <div>
             <ul class="nav navbar-nav navbar-right">
                 <li><a href="/studentInfo">个人信息</a></li>
                 <li><a href="/history">观看历史</a></li>
-                <li><a href="/myCourses">我的收藏</a> </li>
+                <li><a href="/myCourses">我的收藏</a></li>
                 <li th:text="${session.email}">email</li>
             </ul>
         </div>
@@ -29,51 +35,64 @@
         </form>
     </div>
 </nav>
+
 <div id="videos" th:each="courseInfo:${courseInfos}">
     <div class="col-sm-6 col-md-3">
         <div class="thumbnail">
             <img src="img/uiz7.jpg" th:src="'/img/img'+${courseInfo.getCourseId()}+'.jpg'"
                  alt="通用的占位符缩略图">
             <div class="caption" th:id="${courseInfo.getCourseId()}">
-                <h3><a class="video" href="#" th:href="'/video/video'+${courseInfo.getCourseId()}+'.mp4'" th:text="${courseInfo.getCourseName()}">缩略图标签</a></h3>
+                <h3><a class="video" href="#" th:href="'/video/video'+${courseInfo.getCourseId()}+'.mp4'"
+                       th:text="${courseInfo.getCourseName()}">缩略图标签</a></h3>
                 <p th:text="${courseInfo.getSpecialty()}">一些示例文本。一些示例文本。</p>
                 <button type="button" class="btn btn-primary subscription" value="subscription">收藏</button>
                 <label th:text="'播放量:'+${courseInfo.getClickCount()}">播放量</label>
+
             </div>
+
         </div>
     </div>
+</div>
 </div>
 <script th:src="@{/webjars/jquery/3.4.1/jquery.js}"></script>
 <script>
     $(".video").click(function () {
         var courseId = $(this).parent().parent().attr("id");
         $.ajax({
-            type:"POST",
-            data:{
-                "courseId":courseId
+            type: "POST",
+            data: {
+                "courseId": courseId
             },
-            url:"/clickCourseHref",
+            url: "/clickCourseHref",
         });
     });
 
     $(".subscription").click(function () {
         var courseId = $(this).parent().attr("id");
         $.ajax({
-            type:"POST",
-            data:{
-                "courseId":courseId
+            type: "POST",
+            data: {
+                "courseId": courseId
             },
-            url:"/subscriptionClick",
-            success:function () {
+            url: "/subscriptionClick",
+            success: function () {
                 alert("收藏成功");
             },
-            error:function () {
+            error: function () {
                 alert("收藏失败");
             }
         })
     });
 
-
+    // $("#computer").click(function () {
+    //     $.ajax({
+    //         url:"/specialtySort",
+    //         type:"POST",
+    //         data:{
+    //             "specialty":$(this).text()
+    //         }
+    //     })
+    // })
 </script>
 </body>
 </html>
